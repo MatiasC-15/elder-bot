@@ -1,102 +1,64 @@
-import fetch from 'node-fetch';
-import axios from 'axios';
+import yts from 'yt-search';
+const handler = async (m, { conn, text, usedPrefix, command }) => {
+  if (!text) throw `\`\`\`[ 🌴 ] Por favor ingresa un texto. Ejemplo:\n${usedPrefix + command} Did i tell u that i miss you\`\`\``;
 
-let handler = async (m, { conn, command, args, text, usedPrefix }) => {
-if (!text) return conn.reply(m.chat, INGRESE EL NOMBRE DE ALGUNA CANCION, m)
+  const isVideo = /vid|2|mp4|v$/.test(command);
+  const search = await yts(text);
 
-await m.react('🕒');
-try {
-let api = await fetch(https://apis-starlights-team.koyeb.app/starlight/soundcloud-search?text=${encodeURIComponent(text)});
-let json = await api.json();
-let { url } = json[0];
+  if (!search.all || search.all.length === 0) {
+    throw "No se encontraron resultados para tu búsqueda.";
+  }
 
-let api2 = await fetch(https://apis-starlights-team.koyeb.app/starlight/soundcloud?url=${url});
-let json2 = await api2.json();
+  const videoInfo = search.all[0];
+  const body = `\`\`\`⊜─⌈ 📻 ◜YouTube Play◞ 📻 ⌋─⊜
 
-let { link: dl_url, quality, image } = json2;
+    ≡ Título : » ${videoInfo.title}
+    ≡ Views : » ${videoInfo.views}
+    ≡ Duration : » ${videoInfo.timestamp}
+    ≡ Uploaded : » ${videoInfo.ago}
+    ≡ URL : » ${videoInfo.url}
 
-let audio = await getBuffer(dl_url);
+# 🌴 Su ${isVideo ? 'Video' : 'Audio'} se está enviando, espere un momento...\`\`\``;
 
-let txt = *\- M U S I C -\*\n\n;
-    txt += ✩  *Título* : ${json[0].title}\n;
-    txt += ✩  *Calidad* : ${quality}\n;
-    txt += > 🚩 *${textbot}*
+  conn.sendMessage(m.chat, {
+    image: { url: videoInfo.thumbnail },
+    caption: body,
+  }, { quoted: fkontak });
 
-await conn.sendFile(m.chat, image, 'thumbnail.jpg', txt, m, null);
-await conn.sendMessage(m.chat, { audio: audio, fileName: ${json[0].title}.mp3, mimetype: 'audio/mpeg' }, { quoted: m })
+  let result;
+  try {
+    if (command === 'play' || command === 'yta' || command === 'ytmp3') {
+      let hh = await fetch(`https://api.siputzx.my.id/api/dl/youtube/mp3?url=${videoInfo.url}`);
+      result = await hh.json()
+    } else if (command === 'playvid' || command === 'ytv' || command === 'play2' || command === 'ytmp4') {
+    let rr = await fetch(`https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${videoInfo.url}`);
+      result = await rr.json()
+    } else {
+      throw "Comando no reconocido.";
+    }
+let url_dl = isVideo ? result.data.download.url : result.data
+    conn.sendMessage(m.chat, {
+      [isVideo ? 'video' : 'audio']: { url: url_dl },
+      mimetype: isVideo ? "video/mp4" : "audio/mpeg",
+      caption: isVideo ? `URL: ${videoInfo.url}` : '',
+    }, { quoted: m });
 
-await m.react('✅');
-} catch {
-await m.react('✖️');
-}}
-
-handler.help = ['play <búsqueda>']
-handler.tags = ['downloader']
-handler.command = ['play']
-
-export default handler
-
-const getBuffer = async (url, options) => {
-try {
-const res = await axios({
-method: 'get',
-url,
-headers: {
-'DNT': 1,
-'Upgrade-Insecure-Request': 1,
-},
-...options,
-responseType: 'arraybuffer',
-});
-return res.data;
-} catch (e) {
-console.log(Error : ${e});
-}
+  } catch (error) {
+    throw "Ocurrió un error al procesar tu solicitud.";
+  }
 };
 
-/*
-//Instalar la dependencia Node-id3 🙃
-//Use math por problemas de que algunos audios no se envian
-//La segunda url si descarga los datos de la cancion para eso tienes que ingresar a Souncloud la musica que quieres descargar ingresas y copias el link y lo pegas en la segunda url :) 
-//el buscador aun no tiene permisos para ir directamente a la cancion y obtener el link directamente a la cancion por eso es que algunos audios no son enviados
-import axios from 'axios'
-import fs from 'fs'
-import nodeID3 from 'node-id3'
+handler.command = handler.help = ['play', 'playvid', 'ytv', 'ytmp4', 'yta', 'play2', 'ytmp3'];
+handler.tags = ['dl'];
+handler.diamond = 4;
 
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text) return conn.reply(m.chat, 🚩 Ingrese el nombre de la cancion de *Soundcloud.*, m, rcanal)
-await m.react('🕓')
-try {
-let { data: results } = await axios.get(https://apis-starlights-team.koyeb.app/starlight/soundcloud-search?text=${text}, { headers: { 'Content-Type': 'application/json' } })
-let randoms = results[Math.floor(Math.random() * results.length)]
-let { data: sm } = await axios.get(https://apis-starlights-team.koyeb.app/starlight/soundcloud?url=${randoms.url}, { headers: { 'Content-Type': 'application/json' }})
-let mpeg = await axios.get(sm.audio, { responseType: 'arraybuffer' })
-let img = await axios.get(randoms.image, { responseType: 'arraybuffer' })
-let mp3 = ${sm.title}.mp3
-fs.writeFileSync(mp3, Buffer.from(mpeg.data))
-let tags = {
-title: sm.title,
-artist: sm.creator, 
-image: Buffer.from(img.data) 
-}
-nodeID3.write(tags, mp3)
-let txt = *\- S O U N C L O U D - M U S I C -\*\n\n
-txt += 🍘• *Nombre:* ${randoms.title}\n
-txt += 🍘• *Artista:* ${randoms.artist}\n
-txt += 🍘• *Duracion:* ${randoms.duration}\n
-txt += 🍘• *Reproducciones:* ${randoms.repro}\n
-txt += 🍘• *Link:* ${randoms.url}\n\n
-txt += 🚩 Powered By Starlights Team
-await conn.sendFile(m.chat, randoms.image, 'thumb.jpg', txt, m)
-await conn.sendMessage(m.chat, { audio: fs.readFileSync(mp3), fileName: ${sm.title}.mp3, mimetype: 'audio/mpeg' }, { quoted: m })
-fs.unlinkSync(mp3)
-await m.react('✅')
-} catch {
-await m.react('✖️')
-}}
-handler.help = ['soundcloud <búsqueda>']
-handler.tags = ['downloader']
-handler.command = ['soundcloud', 'sound', 'play']
-handler.register = true
-//handler.limit = 3
-export default handler*/
+export default handler;
+
+const getVideoId = (url) => {
+  const regex = /(?:v=|\/)([0-9A-Za-z_-]{11}).*/;
+  const match = url.match(regex);
+  if (match) {
+    return match[1];
+  }
+  throw new Error("Invalid YouTube URL");
+};
