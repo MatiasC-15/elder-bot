@@ -1,25 +1,44 @@
-import Scraper from '@SumiFX/Scraper'
+/* 
 
-let handler = async (m, { conn, text, args, usedPrefix, command }) => {
-  if (!text) return conn.reply(m.chat, '🕐 Ingresa el título de una canción de Spotify.\n\n`Ejemplo:`\n' + `> *${usedPrefix + command}* Gemini Aaliyah - If Only`, m)
-  try {
-    let Sumi = await Scraper.spotifySearch(text)
-    let img = await (await fetch(`${Sumi[0].thumbnail}`)).buffer()
-    let txt = `╭─⬣「 *Spotify Search* 」⬣\n`
-    for (let i = 0; i < Sumi.length; i++) {
-      txt += ` │  ≡◦ *🐢 Nro ∙* ${i + 1}\n`
-      txt += ` │  ≡◦ *🐾 Titulo ∙* ${Sumi[i].title}\n`
-      txt += ` │  ≡◦ *📚 Artista ∙* ${Sumi[i].artist}\n`
-      txt += ` │  ≡◦ *⛓ Url ∙* ${Sumi[i].url}\n`
-      txt += ` ╰──────────⬣`
-      txt += `\n`
-    }
-    
-await conn.sendFile(m.chat, img, 'thumbnail.jpg', txt, m)
-} catch {
+❀ By JTxs
+
+[ Canal Principal ] :
+https://whatsapp.com/channel/0029VaeQcFXEFeXtNMHk0D0n
+
+[ Canal Rikka Takanashi Bot ] :
+https://whatsapp.com/channel/0029VaksDf4I1rcsIO6Rip2X
+
+[ Canal StarlightsTeam] :
+https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S
+
+[ HasumiBot FreeCodes ] :
+https://whatsapp.com/channel/0029Vanjyqb2f3ERifCpGT0W
+*/
+
+// [ ❀ SPOTIFY PLAY ]
+import fetch from 'node-fetch'
+
+let handler = async (m, { conn, command, text, usedPrefix }) => {
+if (!text) return conn.reply(m.chat, ❀ Ingresa el texto de lo que quieras buscar, m)
+
+try {
+let apiSearch = await fetch(https://api.vreden.web.id/api/spotifysearch?query=${text})
+let jsonSearch = await apiSearch.json()
+let { popularity, url } = jsonSearch.result[0]
+let apiDL = await fetch(https://api.vreden.web.id/api/spotify?url=${url})
+let jsonDL = await apiDL.json()
+let { title, artists, cover, music } = jsonDL.result.result
+let HS = `- Titulo : ${title}
+- autor : ${artists}
+- Popularidad : ${popularity}
+- Link : ${url}
+`
+await conn.sendFile(m.chat, cover, 'HasumiBotFreeCodes.jpg', HS, m)
+await conn.sendFile(m.chat, music, 'HasumiBotFreeCodes.mp4', null, m)
+} catch (error) {
+console.error(error)
 }}
-handler.help = ['spotifysearch <búsqueda>']
-handler.tags = ['search']
-handler.command = ['spotifysearch']
+
+handler.command = /^(spotify)$/i
 
 export default handler
