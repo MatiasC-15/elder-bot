@@ -1,5 +1,5 @@
 {
-  "name": "Speedx Bot",
+  "name": "Onyx Bot",
   "version": "6.0.0",
   "description": "Super WhatsApp Bot Multi Device",
   "main": "index.js",
@@ -18,16 +18,16 @@
     "eslint": "eslint .",
     "eslintfix": "eslint --fix ."
   },
-  "homepage": "https://github.com/Sisked-Bot/Sofi-bot",
+  "homepage": "https://github.com/MatiasC-15/onyxbot-MD-renovado1",
   "author": {
     "name": "@Sisked"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sisked-Bot/Sofi-bot.git"
+    "url": "git+https://github.com/MatiasC-15/onyxbot-MD-renovado1.git"
   },
   "bugs": {
-    "url": "https://github.com/Sisked-Bot/Sofi-bot/issues"
+    "url": "https://github.com/MatiasC-15/onyxbot-MD-renovado1/issues"
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
