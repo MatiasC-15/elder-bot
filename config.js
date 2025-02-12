@@ -21,12 +21,12 @@ global.prems = []
    
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.packname = `𝐄𝐋𝐃𝐄𝐑-𝐁𝐎𝐓 🤖`
-global.author = '𝐄𝐋𝐃𝐄𝐑-𝐁𝐎𝐓 🤖'
-global.wait = '𝐄𝐋𝐃𝐄𝐑-𝐁𝐎𝐓 🤖'
-global.botname = '𝐄𝐋𝐃𝐄𝐑-𝐁𝐎𝐓 🤖'
-global.textbot = `𝐄𝐋𝐃𝐄𝐑-𝐁𝐎𝐓 🤖 𝘼 𝙏𝙐𝙎 𝙊𝙍𝘿𝙀𝙉𝙀𝙎`
-global.listo = '𝐄𝐋𝐃𝐄𝐑-𝐁𝐎𝐓 🤖  𝙏𝙊𝘿𝙊 𝙇𝙄𝙎𝙏𝙊!'
+global.packname = `HN BOT 🥷🏼`
+global.author = 'HN BOT 🥷🏼'
+global.wait = 'HN BOT 🥷🏼'
+global.botname = 'HN BOT 🥷🏼'
+global.textbot = `HN BOT 🥷🏼 𝘼 𝙏𝙐𝙎 𝙊𝙍𝘿𝙀𝙉𝙀𝙎`
+global.listo = 'HN BOT 🥷🏼  𝙏𝙊𝘿𝙊 𝙇𝙄𝙎𝙏𝙊!'
 global.namechannel = '「  𝐄𝐋𝐃𝐄𝐑-𝐁𝐎𝐓 🤖  」'
 global.baileys = '@whiskeysockets/baileys'
 
