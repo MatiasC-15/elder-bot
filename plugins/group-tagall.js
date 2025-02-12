@@ -10,7 +10,7 @@ const handler = async (m, {isOwner, isAdmin, conn, text, participants, args, com
   }
   const pesan = args.join` `;
   const oi = `${pesan}`;
-  let teks = ` 𝐄𝐋𝐃𝐄𝐑-𝐁𝐎𝐓 🤖\n\n *Integrantes :  ${participants.length}* ${oi}\n\n┌──⭓ Despierten\n`;
+  let teks = ` HN BOT 🥷🏼\n\n *Integrantes :  ${participants.length}* ${oi}\n\n┌──⭓ Despierten\n`;
   for (const mem of participants) {
     teks += `⭐ @${mem.id.split('@')[0]}\n`;
   }
